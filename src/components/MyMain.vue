@@ -1,7 +1,8 @@
 <template>
   <main>
     <div class="container">
-        <MyCard/>
+        <h2 v-if="albumList.length<10" class="loading">Loading...</h2>
+        <MyCard v-for="album,index in albumList" :key="index" :cardDetails="album"/>
     </div>
 
   </main>
@@ -10,12 +11,29 @@
 <script>
 
 import MyCard from './MyCard.vue'
+import axios from "axios"
 
 export default {
-  components: {
-    MyCard
-    
-  }
+    data(){
+        return{
+            albumList:[]
+        }
+    },
+
+    components: {
+        MyCard,
+            },
+    methods:{
+        getApi(){
+            axios.get("https://flynn.boolean.careers/exercises/api/array/music")
+            .then((response) =>{
+                this.albumList=(response.data.response);
+            });
+        }
+    },
+    mounted(){
+        setTimeout(this.getApi, 3000);
+    }
 }
 </script>
 
@@ -30,10 +48,20 @@ export default {
         .container{
             width: 60%;
             margin: 0 auto;
-            padding-top: 50px;
-            // test
-            height: 550px;
-            border: 1px solid white;
+            // padding-top: 20px;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            align-content: center;
+            height: 600px;
+
+            .loading{
+                color: white;
+                display: block;
+                text-align: center;
+
+            }
+
         }
 
         
