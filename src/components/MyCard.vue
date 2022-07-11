@@ -61,7 +61,6 @@ export default {
                     color: white;
                     margin-bottom: 10px;
                     text-transform: uppercase;
-
                 }
             }
         }

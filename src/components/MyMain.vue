@@ -1,8 +1,10 @@
 <template>
   <main>
     <div class="container">
+        
         <h2 v-if="albumList.length<10" class="loading">Loading...</h2>
         <MyCard v-for="album,index in albumList" :key="index" :cardDetails="album"/>
+        <div><MySearch @SelectGenre="MusicGenre"/></div>
     </div>
 
   </main>
@@ -12,23 +14,32 @@
 
 import MyCard from './MyCard.vue'
 import axios from "axios"
+import MySearch from './MySearch.vue'
 
 export default {
     data(){
+        
         return{
-            albumList:[]
+            albumList:[],
+            
         }
     },
 
     components: {
+        MySearch,
         MyCard,
-            },
+        },
+
     methods:{
         getApi(){
             axios.get("https://flynn.boolean.careers/exercises/api/array/music")
             .then((response) =>{
                 this.albumList=(response.data.response);
             });
+        },
+
+        MusicGenre(selected){
+            console.log(selected)
         }
     },
     mounted(){
@@ -59,7 +70,6 @@ export default {
                 color: white;
                 display: block;
                 text-align: center;
-
             }
 
         }
