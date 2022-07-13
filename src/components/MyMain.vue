@@ -3,8 +3,8 @@
     <div class="container">
         
         <h2 v-if="albumList.length<10" class="loading">Loading...</h2>
-        <MyCard v-for="album,index in albumList" :key="index" :cardDetails="album"/>
-        <div><MySearch @SelectGenre="MusicGenre"/></div>
+        <MyCard v-for="album,index in albumFiltered" :key="index" :cardDetails="album"/>
+        <div><MySearch @SelectGenre="filterGenre"/></div>
     </div>
 
   </main>
@@ -21,6 +21,7 @@ export default {
         
         return{
             albumList:[],
+            albumFiltered:[],
             
         }
     },
@@ -38,8 +39,14 @@ export default {
             });
         },
 
-        MusicGenre(selected){
-            console.log(selected)
+        filterGenre(myGenre){
+            if (myGenre === 'All'){
+                this.albumFiltered = this.albumList
+            }
+            else{
+            this.albumFiltered = this.albumList.filter((elm) => elm.genre.includes(myGenre))
+            }
+            // console.log(genre)
         }
     },
     mounted(){

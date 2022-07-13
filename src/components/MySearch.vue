@@ -19,7 +19,7 @@ export default {
     name: "MySearch",
     data(){
         return{
-            selected:'All'
+            selected:' '
         }
     }
 
